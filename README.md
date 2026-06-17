@@ -57,7 +57,7 @@ Los archivos se dividen según los criterios de evaluación del proyecto:
 **Escenario 2. Interoperabilidad y Segmentación (VLAN)**
 * `escenario-vlans.xml`: Segmentación estricta de dominios de difusión mediante el estándar IEEE 802.1Q a través de enlaces troncales.
 
-**Escenario 3. Prevención de Bucles (STP / RSTP) (Escenario 3)**
+**Escenario 3. Prevención de Bucles (STP / RSTP)**
 * `escenario-stp.xml`: Plantilla base de topología en anillo con tres nodos.
 * `escenario-stp-lb.xml`: Evaluación del protocolo STP clásico utilizando exclusivamente Linux Bridge.
 * `escenario-stp-ovs.xml`: Evaluación del protocolo STP clásico utilizando exclusivamente Open vSwitch.
@@ -124,7 +124,3 @@ Víctor Mendizábal Gimeno
 Trabajo Fin de Grado – ETSIT-UPM
 
 Curso académico 2025-2026
-
-
-```bash
-sudo vnx -f escenario-vlans.xml -v --create
