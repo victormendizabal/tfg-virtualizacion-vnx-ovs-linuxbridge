@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<vnx xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="/usr/share/xml/vnx/vnx-2.00.xsd">
+  <global>
+    <version>2.0</version>
+    <scenario_name>tfg-stp-lb</scenario_name>
+    <automac offset="0"/>
+    <vm_mgmt type="private" network="10.250.0.0" mask="24" />
+  </global>
+
+  <net name="net_s1_s2" mode="virtual_bridge" />
+  <net name="net_s2_s3" mode="virtual_bridge" />
+  <net name="net_s3_s1" mode="virtual_bridge" />
+
+  <net name="net_h1_s1" mode="virtual_bridge" />
+  <net name="net_h2_s2" mode="virtual_bridge" />
+  <net name="net_h3_s3" mode="virtual_bridge" />
+
+  <vm name="h1" type="lxc" arch="x86_64">
+    <filesystem type="cow">/usr/share/vnx/filesystems/rootfs_lxc_ubuntu64</filesystem>
+    <if id="1" net="net_h1_s1">
+      <ipv4>10.0.0.1/24</ipv4>
+    </if>
+  </vm>
+
+  <vm name="h2" type="lxc" arch="x86_64">
+    <filesystem type="cow">/usr/share/vnx/filesystems/rootfs_lxc_ubuntu64</filesystem>
+    <if id="1" net="net_h2_s2">
+      <ipv4>10.0.0.2/24</ipv4>
+    </if>
+  </vm>
+
+  <vm name="h3" type="lxc" arch="x86_64">
+    <filesystem type="cow">/usr/share/vnx/filesystems/rootfs_lxc_ubuntu64</filesystem>
+    <if id="1" net="net_h3_s3">
+      <ipv4>10.0.0.3/24</ipv4>
+    </if>
+  </vm>
+
+  <vm name="s1" type="lxc" arch="x86_64">
+    <filesystem type="cow">/usr/share/vnx/filesystems/rootfs_lxc_ubuntu64</filesystem>
+    <if id="1" net="net_h1_s1"></if> 
+    <if id="2" net="net_s1_s2"></if> 
+    <if id="3" net="net_s3_s1"></if>
+    <exec seq="on_boot" type="verbatim">
+        ip link add name br0 type bridge stp_state 1
+        ip link set eth1 master br0
+        ip link set eth2 master br0
+        ip link set eth3 master br0
+        ip link set eth1 up
+        ip link set eth2 up
+        ip link set eth3 up
+        ip link set br0 up
+    </exec>
+  </vm>
+
+  <vm name="s2" type="lxc" arch="x86_64">
+    <filesystem type="cow">/usr/share/vnx/filesystems/rootfs_lxc_ubuntu64</filesystem>
+    <if id="1" net="net_h2_s2"></if> 
+    <if id="2" net="net_s1_s2"></if> 
+    <if id="3" net="net_s2_s3"></if>
+    <exec seq="on_boot" type="verbatim">
+        ip link add name br0 type bridge stp_state 1
+        ip link set eth1 master br0
+        ip link set eth2 master br0
+        ip link set eth3 master br0
+        ip link set eth1 up
+        ip link set eth2 up
+        ip link set eth3 up
+        ip link set br0 up
+    </exec>
+  </vm>
+
+  <vm name="s3" type="lxc" arch="x86_64">
+    <filesystem type="cow">/usr/share/vnx/filesystems/rootfs_lxc_ubuntu64</filesystem>
+    <if id="1" net="net_s3_s1"></if> 
+    <if id="2" net="net_s2_s3"></if>
+    <if id="3" net="net_h3_s3"></if>
+    <exec seq="on_boot" type="verbatim">
+        ip link add name br0 type bridge stp_state 1
+        ip link set eth1 master br0
+        ip link set eth2 master br0
+        ip link set eth3 master br0
+        ip link set eth1 up
+        ip link set eth2 up
+        ip link set eth3 up
+        ip link set br0 up
+    </exec>
+  </vm>
+</vnx>
