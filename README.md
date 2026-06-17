@@ -51,6 +51,7 @@ apt install -y \
 ## Estructura de los Escenarios (Archivos XML)
 
 Los archivos se dividen según los criterios de evaluación del proyecto:
+
 **Escenario 1. Prueba de concepto**
 * `escenario-1.xml`: Topología base (híbrida) que establece una prueba de concepto para verificar la conectividad de extremo a extremo.
 
@@ -68,9 +69,6 @@ Los archivos se dividen según los criterios de evaluación del proyecto:
 * `escenario-lineal-lb.xml`: Topología lineal para inyección masiva de tráfico y monitorización de interrupciones del núcleo en Linux Bridge.
 * `escenario-lineal-ovs.xml`: Topología lineal análoga para evaluar el estrés computacional del *datapath* en Open vSwitch.
 
-## Modo de Uso
-
-Para desplegar cualquiera de los escenarios, utiliza el comando `vnx` con el parámetro de construcción y apunta al archivo XML deseado. Por ejemplo:
 
 ## Despliegue de escenarios
 
